@@ -1,0 +1,8 @@
+# 将所有的纯文本文件末尾改成 Unix 风格的 lf
+* text eol=lf
+
+# 排除掉非纯文本文件
+*.jpg -text
+*.png -text
+*.pdf -text
+*.doc -text
