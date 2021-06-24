@@ -16,8 +16,14 @@
 > npm run build
 ```
 
-#其他 
+#其他
 ## 适配配置
 px转vm
 参考文档
 https://www.cnblogs.com/kdcg/p/9106463.html
+
+
+# list todo
+
+1. 公交线路绘制站点名称
+2. 搜索提示

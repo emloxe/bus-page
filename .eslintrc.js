@@ -14,13 +14,14 @@ module.exports = {
     jest: true
   },
   globals: {
-    $: true,
-    echarts: true,
-    twaver: "readonly",
-    mono: "readonly"
+    AMap: "readonly",
+    layui: "readonly",
+    $: "readonly"
   },
   rules: {
     "no-console": 0,
+    "no-unused-vars": 0,
+    "class-methods-use-this": 0,
     "no-unused-vars": [
       "error",
       {

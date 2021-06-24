@@ -31,21 +31,21 @@ module.exports = {
     ? config.build.assetsPublicPath
     : config.dev.assetsPublicPath
   },
-  optimization: {
-    splitChunks: {
-      cacheGroups: {
-        vendors: {
-          name: "vendor",
-          test: /[\\/]node_modules[\\/]/,
-          chunks: "all",
-          priority: 10 // 优先级
-        },
-      }
-    },
-    runtimeChunk: {
-      name: 'manifest',
-    },
-  },
+  // optimization: {
+  //   splitChunks: {
+  //     cacheGroups: {
+  //       vendors: {
+  //         name: "vendor",
+  //         test: /[\\/]node_modules[\\/]/,
+  //         chunks: "all",
+  //         priority: 10 // 优先级
+  //       },
+  //     }
+  //   },
+  //   runtimeChunk: {
+  //     name: 'manifest',
+  //   },
+  // },
   plugins: [
     new HtmlWebpackPlugin({
       filename: 'index.html',
