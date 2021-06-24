@@ -1,0 +1,3 @@
+var globalConfig = {
+  searchHint: true,
+};

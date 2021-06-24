@@ -22,50 +22,66 @@ export default class Map {
 
     this.map = map;
 
-    this.initStationSearch();
-    this.initLineSearch();
-    this.initTransferSearch();
+    this.initSearch();
   }
 
-  /**
-   * 初始化站点查询
-   */
-  initStationSearch() {
+
+  initSearch() {
+    // 站点查询
     this.stationSearch = new AMap.StationSearch({
       pageIndex: 1,
       pageSize: 10,
       city: '襄阳',
     });
-  }
 
-  /**
-   * 初始化公交线路查询
-   */
-  initLineSearch() {
+    // 公交线路查询
     this.lineSearch = new AMap.LineSearch({
       pageIndex: 1,
       pageSize: 10,
       city: '襄阳',
       extensions: 'all',
     });
-  }
 
-
-  initTransferSearch(start, end) {
+    // 换乘查询
     this.transferSearch = new AMap.Transfer({
       city: '襄阳',
       extensions: 'all',
       // panel: document.querySelector('#panel'),
       // policy: AMap.TransferPolicy.LEAST_TIME //乘车策略
     });
+
+    // 地点搜索提示
+    this.placeSearch = new AMap.PlaceSearch({
+      city: '襄阳',
+    });
   }
 
-  searchStation(station, cb) {
-    this.stationSearch.search(station, (status, result) => {
-      if (cb) {
-        cb(status, result);
-      }
+  /**
+   * 查询经过站点的 公交数据
+   * @param {*} type 可选类型有 id ，name
+   * @param {*} value
+   * @param {Function} cb
+   */
+  searchStation(value, cb = () => {}) {
+    this.stationSearch.search(value, (status, result) => {
+      cb(status, result);
       console.log('站点数据', result);
+    });
+  }
+
+
+  searchStationById(id, cb = () => {}) {
+    this.stationSearch.searchById(id, (status, result) => {
+      cb(status, result);
+      console.log('站点数据', result);
+    });
+  }
+
+  searchPlace(keyword, cb = () => {}) {
+    this.placeSearch.search(keyword, (status, result) => {
+      // 搜索成功时，result即是对应的匹配数据
+      console.log(result);
+      cb(status, result);
     });
   }
 
@@ -114,6 +130,7 @@ export default class Map {
 
       if (code) {
         cb('complete', line);
+        return;
       }
 
       this.lineSearch.searchById(id, (status, result) => {

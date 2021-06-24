@@ -16,6 +16,7 @@
     <title>查询-襄阳公共交通集团</title>
     <link rel="stylesheet" href="./static/layui/css/layui.css">
     <link rel="stylesheet" href="./static/fonts/iconfont.css">
+    <script src="./static/js/config.js"></script>
     <style>
 
 .spinner-div {
@@ -148,7 +149,9 @@
                   <div class="top-form">
                     <p class="label">站名</label>
                     <div class="">
-                      <input id="search_busStop_inpt" type="text" placeholder="请输入公交站名" class="layui-input">
+                      <input id="search_busStop_inpt" type="text" placeholder="请输入公交站名" class="layui-input" autocomplete="off">
+                      <div id="busStop_hint" class="hint-wrap">
+                      </div>
                     </div>
                   </div>
 
@@ -164,16 +167,20 @@
                   <div class="top-form">
                     <div class="item fl"  style="width: 45%;">
                       <p class="label">起始站</p>
-                      <input id="search_transfer_inpt1" type="text"  placeholder="请输入起始站" class="layui-input">
+                      <input id="search_transfer_inpt1" type="text"  placeholder="请输入起始站" class="layui-input" autocomplete="off">
+                      <div id="start_hint" class="hint-wrap">
+                      </div>
                     </div>
 
                     <div class="item fl"  style="width: 10%;">
-                      <span class="icon iconfont icon-jiaohuan"></span>
+                      <span id="change_direction" class="icon iconfont icon-jiaohuan"></span>
                     </div>
 
                     <div class="item fl"  style="width: 45%;">
                       <p class="label">目的站</p>
-                      <input id="search_transfer_inpt2" type="text"  placeholder="请输入目的站" class="layui-input">
+                      <input id="search_transfer_inpt2" type="text"  placeholder="请输入目的站" class="layui-input" autocomplete="off">
+                      <div id="end_hint" class="hint-wrap">
+                      </div>
                     </div>
                   </div>
 
@@ -214,7 +221,7 @@
     <div class="footer content-width am-g">
       <div class="am-u-sm-10">
         <div class="am-cf">
-          <div class="am-fl"><img src="http://www.xfbus.com.cn/img/logo_b.png" /></div>
+          <div class="am-fl"><img src="./assets/images/logo_b.png" /></div>
           <div class="am-fl am-padding-left-xl">
             地址：湖北省襄阳市星火路1号　　邮编：441000<br />电话：0710-3441158　　Email：xfgjoffice@163.com
           </div>
@@ -228,39 +235,13 @@
             >　技术支持：<a target="_blank" href="#"
               >襄阳日报信息科技有限公司</a
             >
-            <!-- <script type="text/javascript">
-              var cnzz_protocol = 'https:' == document.location.protocol ? ' https://' : ' http://';
-              document.write(
-                unescape(
-                  "%3Cspan id='cnzz_stat_icon_1275782194'%3E%3C/span%3E%3Cscript src='" +
-                    cnzz_protocol +
-                    "s23.cnzz.com/z_stat.php%3Fid%3D1275782194%26show%3Dpic' type='text/javascript'%3E%3C/script%3E"
-                )
-              );
-            </script> -->
-            <!-- <span id="cnzz_stat_icon_1275782194"
-              ><a
-                href="https://www.cnzz.com/stat/website.php?web_id=1275782194"
-                target="_blank"
-                title="站长统计"
-                ><img border="0" hspace="0" vspace="0" src="http://icon.cnzz.com/img/pic.gif" /></a
-            ></span>
-            <script
-              src=" http://s23.cnzz.com/z_stat.php?id=1275782194&amp;show=pic"
-              type="text/javascript"
-            ></script>
-            <script
-              src="http://c.cnzz.com/core.php?web_id=1275782194&amp;show=pic&amp;t=z"
-              charset="utf-8"
-              type="text/javascript"
-            ></script> -->
+
           </p>
         </div>
       </div>
       <div class="am-u-sm-2"><img src="./assets/images/wxbg.png" /></div>
     </div>
     <!-- footer end -->
-
 
     <script src="./static/layui/layui.js"></script>
     <script src="https://webapi.amap.com/maps?v=1.4.15&key=d0df78bbdb052c857c7051e4354af09f"></script>
