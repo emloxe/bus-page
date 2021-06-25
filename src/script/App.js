@@ -334,6 +334,12 @@ class App {
   showChangeLine(arr) {
     const { $ } = layui;
 
+
+    const htmlRander = curr => `<div class="one">
+      <div class="clearfix"><h5 class="fl">${curr.busName}</h5> <span class="fr"> ${curr.startTime} <i class="start">起</i>   ${curr.endTime ? `|  ${curr.endTime} <i>止</i>` : ''}</span></div>
+      <p> ${curr.changeInfo}</p>
+    </div>`;
+
     // $('#changeLine_wrap').html();
 
     if (!arr) {
@@ -344,7 +350,7 @@ class App {
           if (!result.code && result.data.length > 0) {
             const html = result.data.reduce((all, curr, index) => {
               if (index < globalConfig.maxBusChangeNum) {
-                all += `<p>${curr.busName} ${curr.changeInfo}</p>`;
+                all += htmlRander(curr);
               }
               return all;
             }, '');
@@ -365,7 +371,7 @@ class App {
             if (!result.code && result.data.length > 0) {
               const html = result.data.reduce((all, curr, index) => {
                 if (index < globalConfig.maxBusChangeNum) {
-                  all += `<p>${curr.busName} ${curr.changeInfo}</p>`;
+                  all += htmlRander(curr);
                 }
                 return all;
               }, '');
