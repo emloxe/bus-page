@@ -10,22 +10,76 @@ export default class Hint {
 
   addEvent() {
     this.wrap.on('click', 'li', (e) => {
-      console.log(e);
       const index = layui.$(e.currentTarget).index();
       this.clickCallBack(this.data[index]);
 
       this.hide();
     });
 
-    document.body.onclick = () => {
+    this.wrap.on('mouseenter', (e) => {
+      const activeDom = this.wrap.find('.active');
+      if (activeDom.length > 0) {
+        activeDom.removeClass('active');
+      }
+    });
+
+    document.body.addEventListener('click', () => {
       this.hide();
-    };
+    });
+
+    this.wrap.parent().on('keydown', (e) => {
+      console.log(e);
+      //  "ArrowUp" "ArrowDown" "Enter"
+
+      if (e.key === 'ArrowDown') {
+        const activeDom = this.wrap.find('.active');
+        if (activeDom.length === 0) {
+          const liDom = this.wrap.find('li');
+          if (liDom.length > 0) {
+            liDom.first().addClass('active');
+          }
+        } else {
+          const nextDom = activeDom.next();
+          if (nextDom.length > 0) {
+            activeDom.removeClass('active');
+            nextDom.addClass('active');
+          }
+        }
+      }
+
+      if (e.key === 'ArrowUp') {
+        const activeDom = this.wrap.find('.active');
+        if (activeDom.length === 0) {
+          const liDom = this.wrap.find('li');
+          if (liDom.length > 0) {
+            liDom.first().addClass('active');
+          }
+        } else {
+          const nextDom = activeDom.prev();
+          if (nextDom.length > 0) {
+            console.log(nextDom);
+            activeDom.removeClass('active');
+            nextDom.addClass('active');
+          }
+        }
+      }
+
+      if (e.key === 'Enter') {
+        const activeDom = this.wrap.find('.active');
+        if (activeDom) {
+          this.clickCallBack(this.data[activeDom.index()]);
+          this.hide();
+        }
+      }
+
+      e.stopPropagation();
+    });
   }
 
   show(stationInfo) {
     this.data = stationInfo;
     const lis = stationInfo.reduce((accumulator, current) => {
-      accumulator += `<li>${current.name}</li>`;
+      accumulator += `<li>${current.name}${current.address ? `  <span style="font-size: 12px">【${current.address}】<span>` : ''}</li>`;
       return accumulator;
     }, '');
     this.wrap.html(`<ul>${lis}</ul>`);
@@ -36,6 +90,6 @@ export default class Hint {
   }
 
   noResult() {
-    this.wrap.html('<ul><span>无数据</span></ul>');
+    this.wrap.html('<ul><p>无数据</p></ul>');
   }
 }

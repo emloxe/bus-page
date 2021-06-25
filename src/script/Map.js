@@ -57,8 +57,8 @@ export default class Map {
   }
 
   /**
-   * 查询经过站点的 公交数据
-   * @param {*} type 可选类型有 id ，name
+   * 根据名称 查询经过站点的 公交数据
+   * @param {*} type
    * @param {*} value
    * @param {Function} cb
    */
@@ -69,7 +69,12 @@ export default class Map {
     });
   }
 
-
+  /**
+   * 根据站点id 查询经过站点的 公交数据
+   * @param {*} type
+   * @param {*} value
+   * @param {Function} cb
+   */
   searchStationById(id, cb = () => {}) {
     this.stationSearch.searchById(id, (status, result) => {
       cb(status, result);
@@ -77,6 +82,11 @@ export default class Map {
     });
   }
 
+  /**
+   * 根据关键词查询数据
+   * @param {*} keyword
+   * @param {*} cb
+   */
   searchPlace(keyword, cb = () => {}) {
     this.placeSearch.search(keyword, (status, result) => {
       // 搜索成功时，result即是对应的匹配数据
@@ -86,6 +96,11 @@ export default class Map {
   }
 
 
+  /**
+   * 根据起始结束的名称查询公交换乘线路
+   * @param {*} param0
+   * @param {*} cb
+   */
   searchTransfer({ start, end }, cb) {
     this.transferSearch.search([
       {
@@ -105,6 +120,27 @@ export default class Map {
 
       console.log('换乘数据', result);
     });
+  }
+
+  /**
+   * 根据起始结束的经纬度 查询公交换乘线路
+   * @param {*} param0
+   * @param {*} cb
+   */
+  searchTransferByLngLat({ start, end }, cb) {
+    this.transferSearch.search(
+      new AMap.LngLat(start.lng, start.lat),
+      new AMap.LngLat(end.lng, end.lat),
+      (status, result) => {
+        transferArr = result;
+
+        if (cb) {
+          cb(status, result);
+        }
+
+        console.log('换乘数据', result);
+      },
+    );
   }
 
 

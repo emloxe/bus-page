@@ -16,7 +16,6 @@ module.exports = {
   globals: {
     AMap: "readonly",
     layui: "readonly",
-    $: "readonly",
     globalConfig:  "readonly",
   },
   rules: {

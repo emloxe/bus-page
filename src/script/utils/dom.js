@@ -21,7 +21,7 @@ export const createBusStopTitleHtml = (data, name = '') => {
   const dom = $(`
       <div class="result-title clearfix">
         <span class="icon iconfont icon-tishi fl"></span>
-        <p>
+        <p class="fr">
         共有 <span style="text-decoration: underline;">${data.length}</span> 条公交线路经过 <span style="text-decoration: underline;">${name}</span> 。
         ${lis}
         </p>
@@ -73,7 +73,7 @@ export const createBusStopCenterHtml = (wrap, data, currBusName) => {
     }
     accumulator2
         += `<li class="${currentValue.name === currBusName ? 'active' : ''}">
-            <a href="#" id=${currentValue.id} title="${currentValue.name}" style="max-height: 170px;">${currentValue.name}</a></li>`;
+            <a href="##" id=${currentValue.id} title="${currentValue.name}" style="max-height: 170px;">${currentValue.name}</a></li>`;
 
     if (index % 25 === 24) {
       accumulator2 += '</ol>';
@@ -140,7 +140,12 @@ export const createTransferHtml = ({ start, end }, plans) => {
   const { $ } = layui;
   const wrap = $('#map_result');
   const plansHtml = plans.reduce((accumulator, currentValue, index) => {
-    const lis = currentValue.segments.reduce((accumulator2, currentValue2) => {
+    const lis = currentValue.segments.reduce((accumulator2, currentValue2, index2) => {
+      if (index2 !== (currentValue.segments - 1) && currentValue2.time < 30) {
+        return accumulator2;
+      }
+
+
       if (currentValue2.transit_mode === 'WALK') {
         const [txt, busStopName] = currentValue2.instruction.split('到达');
         accumulator2 += `<li class="walk"><i class="iconfont iconwalk"></i><span>${txt} 至</span></li>`;
@@ -153,9 +158,9 @@ export const createTransferHtml = ({ start, end }, plans) => {
         if (currentValue2.instruction.includes('途径')) {
           // eslint-disable-next-line no-unused-vars
           const [busLineName, a, stopNum, b, busStopName] = currentValue2.instruction.split(/['途径'|'到达']/);
-          accumulator2 += `<li class="bus"><span><a href="#" title="${busLineName}">${busLineName}</a>途径 ${stopNum} </span></li>`;
+          accumulator2 += `<li class="bus"><span><a href="##" title="${busLineName}">${busLineName}</a>乘坐 ${currentValue2.transit.via_num + 1} 站</span></li>`;
           if (busStopName) {
-            accumulator2 += `<li class="site"><i class="iconfont iconbus1"></i><a href="#" title="${busStopName}">${busStopName}</a>`;
+            accumulator2 += `<li class="site"><i class="iconfont iconbus1"></i><a href="##" title="${busStopName}">${busStopName}</a>`;
           }
         }
       }
@@ -168,10 +173,10 @@ export const createTransferHtml = ({ start, end }, plans) => {
         <p>总行程${Math.round(currentValue.distance / 100) / 10}公里，乘车${Math.round(currentValue.transit_distance / 100) / 10}公里，步行${currentValue.walking_distance}米，全程约${Math.round(currentValue.time / 60)}分钟</p>
       </div>
       <ul class="plan-list2">
-        <li class="site"><i class="iconfont iconstart"></i><a href="#" title="${start}">${start}</a>
+        <li class="site"><i class="iconfont iconstart"></i><a href="##" title="起点">起点</a>
         </li>
         ${lis}
-        <li class="site end"><i class="iconfont iconend"></i><a href="#" title="${end}">${end}</a>
+        <li class="site end"><i class="iconfont iconend"></i><a href="##" title="终点">终点</a>
       </ul>
     </div>`;
 
