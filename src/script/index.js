@@ -1,6 +1,7 @@
 import '../style/rest.css';
 import '../style/base.less';
 import '../style/copy.css';
+import '../style/copy2.css';
 import '../style/index.less';
 
 

@@ -1,0 +1,306 @@
+@charset "UTF-8";
+
+.am-container {
+	width: 1190px;
+	max-width: 1190px;
+	padding: 0;
+}
+.am-g-fixed {
+	width: 1190px;
+}
+.m-hd .am-sticky {
+	-webkit-filter: none;
+	-webkit-transition: all 0.5s ease;
+	-moz-transition: all 0.5s ease;
+	-ms-transition: all 0.5s ease;
+	-o-transition: all 0.5s ease;
+	transition: all 0.5s ease;
+}
+[class*=am-u-] + [class*=am-u-]:last-child {
+	float: left;
+}
+[class*=am-u-] {
+	padding-left: 0;
+	padding-right: 0;
+}
+/* 头部 */
+.search{
+	position: relative;
+}
+.app-search .form-control, .app-search .form-control:focus {
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    font-size: 13px;
+    height: 34px;
+    font-weight:500;
+    padding-left: 10px;
+    padding-right: 10px;
+    margin-left:20px;
+	margin-top:10px;
+    box-shadow: none;
+    border-radius:0;
+    width: 230px;
+}
+/* .btn10 {
+    position: absolute;
+    background: url(../../img/search.png) 0 0 no-repeat;
+    width: 19px;
+    height: 21px;
+    top: 18px;
+    right: 5px;
+    border: 0;
+} */
+.form-control {
+    background-color: #FFFFFF;
+    border: 1px solid #E3E3E3;
+    border-radius: 4px;
+    padding: 7px 12px;
+    height: 38px;
+    max-width: 100%;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+    -webkit-transition: all 300ms linear;
+    -moz-transition: all 300ms linear;
+    -o-transition: all 300ms linear;
+    -ms-transition: all 300ms linear;
+    transition: all 300ms linear;
+}
+.topbar {
+	height: 30px;
+	background: #f5f5f5;
+	color: #878787;
+	line-height: 30px;
+	font-size: 1.3rem;
+	border-bottom: 1px solid #ebebeb;
+}
+.m-hd {
+	width: 1190px;
+	height: auto;
+	position: relative;
+	margin: 0 auto;
+	padding: 20px 0;
+}
+.header-contact {
+	position: relative;
+	padding: 0 20px 0 0;
+	height: 62px;
+}
+/* .contact-icon {
+	position: absolute;
+	width: 42px;
+	height: 60px;
+	background: url(../../img/contact-icon.png) left 11px no-repeat;
+} */
+.header-contact .contact-item {
+	display: block;
+	padding-left: 55px;
+	font-size: 16px;
+	font-weight:500;
+	line-height:30px;
+	color: #f45f2a;
+	text-align: left;
+	font-family:Verdana;
+}
+.contact-item h1 {
+	font-size: 16px;
+	font-weight:500;
+	line-height:30px;
+	color: #f45f2a;
+	float: left;
+	font-family:Verdana;
+}
+.contact-item span {
+	font-weight: 600;
+	float: left;
+}
+.am-nav>li:hover .am-dropdown-content {
+	display: block;
+}
+.header-nav {
+	background-color: #163286;
+	position: relative;
+	width: 100%;
+	min-width: 1190px;
+	height: 50px;
+}
+.header-nav .am-menu {
+	margin: 0 auto
+}
+.header-nav .am-nav>li>a {
+	color: #fff;
+	line-height: 35px;
+	text-align: center
+}
+.header-nav .am-nav>li>a:hover {
+	color: #ff7200;
+	background: none;
+}
+.header-nav .am-nav>li.am-active>a:focus {
+	color: #ff7200;
+}
+.header-nav .am-nav-pills>li+li {
+	margin-left: 0;
+}
+.header-nav .am-dropdown-content {
+	min-width: 207px;
+	background-color: rgba(22, 50, 134, .9);
+	border: none;
+	transition: 600ms;
+	box-shadow: 0 6px 10px rgba(0, 0, 0, .1);
+}
+.header-nav ul.am-dropdown-content>li>a {
+	color: #fff;
+}
+.header-nav ul.am-dropdown-content>li>a:focus, ul.am-dropdown-content>li>a:hover {
+	background: rgba(89, 171, 222, .9);
+	color: #fff;
+}
+.header-nav .am-dropdown-content:after, .header-nav .am-dropdown-content:before {
+	border: none;
+}
+.menu-item a {
+	display: block;
+	padding: 0px 30px;
+	text-align: left;
+	line-height: 30px;
+	color: #fff;
+	font-size: 1.5rem;
+	border-bottom: 1px solid rgba(255, 255, 255, .08);
+}
+.menu-item a span {
+	float: right;
+	line-height: 30px;
+	opacity: 0;
+	-moz-opacity: 0;
+	filter: alpha(opacity=0);
+}
+.menu-item a:hover {
+	text-indent: 1em;
+	color: #fff;
+}
+.menu-item a:hover span {
+	opacity: 1;
+	-moz-opacity: 1;
+	filter: alpha(opacity=100);
+}
+/* 头部大banner */
+.posra .am-slider {
+	min-width: 1190px;
+	position: relative;
+	z-index: 1;
+}
+.m-search .am-slider-a1 {
+	-webkit-box-shadow: none;
+	box-shadow: none;
+}
+.m-search .am-slider li img {
+	min-height: 380px
+}
+.m-search .am-slider-a1 .am-control-nav li a {
+	width: 12px;
+	height: 12px;
+	display: block;
+	background-color: #163286;
+}
+.m-search .am-slider-a1 .am-control-nav li a.am-active {
+	width: 15px;
+	height: 15px;
+	background-color: #fff;
+}
+.posra {
+	position: relative;
+	zoom: 1;
+}
+.m-search {
+	background: none;
+	position: relative;
+}
+.g-searchWrap {
+	position: relative;
+	left: 3%;
+	top: 10px;
+	z-index: 1000;
+}
+.g-searchWrap {
+	width: 330px;
+}
+.g-searchWrap .g-searchBg, .m-search .g-searchWrap .g-searchBox {
+	width: 330px;
+	height: 300px;
+	position: absolute;
+	left: 0;
+	top: 30px;
+}
+/* .g-searchWrap .g-searchBg {
+	background: url("../../img/searchbg.png");
+	-webkit-box-shadow: #666 0px 0px 10px;
+	-moz-box-shadow: #666 0px 0px 10px;
+	box-shadow: #666 0px 0px 10px;
+	background-position: bottom center;
+	opacity: 0.8;
+	-moz-opacity: 0.8;
+	filter: alpha(opacity=80);
+} */
+.g-searchBox .am-tabs {
+	margin: 0;
+}
+.g-searchBox .am-tabs-d2 .am-tabs-nav {
+	background: none;
+	border-bottom: 1px solid #bbb;
+	padding-top: 2px;
+}
+.g-searchBox .am-tabs-d2 .am-tabs-nav>.am-active {
+	background-color: none;
+	border-bottom: 2px solid #2562b4;
+}
+.g-searchBox .am-tabs-d2 .am-tabs-nav>.am-active a {
+	font-weight: 600;
+	color: #2562b4;
+	cursor: pointer;
+}
+.g-searchBox .am-tabs-d2 .am-tabs-nav>.am-active:after {
+	border-bottom-color: #2562b4;
+}
+.g-searchBox .am-tabs-bd {
+	border: none;
+}
+.g-searchBox .am-form-group .am-input {
+	line-height: 36px;
+	height: 36px
+}
+.g-searchBox .am-radius {
+	border-radius: 3px;
+}
+.g-searchBox .am-btn-primary {
+	background-color: #2562b4;
+	border-color: #2562b4;
+	font-size: 1.6rem;
+	font-weight: 300;
+	padding: 5px 30px;
+}
+.g-searchBox .am-btn {
+	padding: 10px 50px 10px 40px;
+}
+
+.tubiao{padding-bottom: 40px}
+.tubiao ul{padding:0;margin:0;list-style-type: none;}
+.tubiao ul li{width:20%;float:left;text-align: center;}
+.tubiao ul li p{text-align: center}
+.tubiao ul li:hover {
+	-webkit-transition: all 0.25s linear 0.01s;
+	-moz-transition: all 0.25s linear 0.01s;
+	-ms-transition: all 0.25s linear 0.01s;
+	-o-transition: all 0.25s linear 0.01s;
+	transition: all 0.25s linear 0.01s;
+	transform: scale(1.05, 1.05);
+}
+
+.footer {
+	padding: 20px 10px;
+	color:#666;
+	font-size:14px;
+	line-height: 26px;
+	position: relative;
+}
+.footer .copy{color:#999;font-size:13px}
+.footer .copy a{color:#555}
+

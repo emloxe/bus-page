@@ -28,10 +28,13 @@ export default class Map {
 
   initSearch() {
     // 站点查询
-    this.stationSearch = new AMap.StationSearch({
-      pageIndex: 1,
-      pageSize: 10,
-      city: '襄阳',
+    this.stationSearch = new AMap.PlaceSearch({
+      type: '公交', // 兴趣点类别
+      pageSize: 10, // 单页显示结果条数
+      pageIndex: 1, // 页码
+      city: '襄阳', // 兴趣点城市
+      citylimit: true, // 是否强制限制在设置的城市内搜索
+      autoFitView: true, // 是否自动调整地图视野使绘制的 Marker点都处于视口的可见范围
     });
 
     // 公交线路查询
@@ -63,7 +66,7 @@ export default class Map {
    * @param {Function} cb
    */
   searchStation(value, cb = () => {}) {
-    this.stationSearch.search(value, (status, result) => {
+    this.stationSearch.searchInBounds(value, globalConfig.polygonArr, (status, result) => {
       cb(status, result);
       console.log('站点数据', result);
     });

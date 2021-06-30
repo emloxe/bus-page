@@ -308,6 +308,7 @@ class App {
       return;
     }
     this.mapInstance.searchStation(val, (status, result) => {
+      console.log('busStopSearchHintHandler', result);
       if (status === 'complete' && result.stationInfo.length > 0) {
         hintInstance.show(result.stationInfo);
       } else {

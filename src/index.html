@@ -16,6 +16,7 @@
     <title>查询-襄阳公共交通集团</title>
     <link rel="stylesheet" href="./static/layui/css/layui.css">
     <link rel="stylesheet" href="./static/fonts/iconfont.css">
+    <link rel="stylesheet" href="http://www.xfbus.com.cn/img/css/amazeui.min.css">
     <script src="./static/js/config.js"></script>
     <style>
 
@@ -23,7 +24,7 @@
   width: 100%;
   height: 100%;
   z-index: 1000;
-  position: absolute;
+  position: fixed;
   background: #fff;
   top: 0px;
   left: 0;
@@ -97,6 +98,19 @@
     </style>
   </head>
   <body>
+
+
+    <div class = "spinner-div" id="spinner-div">
+      <div id="spinner" class="spinner">
+        <div class="rect1"></div>
+        <div class="rect2"></div>
+        <div class="rect3"></div>
+        <div class="rect4"></div>
+        <div class="rect5"></div>
+      </div>
+    </div>
+
+
     <!-- header start-->
     <div class="header">
       <div class="m-hd am-cf content-width">
@@ -120,18 +134,98 @@
 
     <!-- header end -->
 
+    <!-- nav start -->
+    <div class="header-nav">
+      <nav data-am-widget="menu" class="am-menu am-menu-default am-center am-no-layout">
+        <ul class="am-nav am-nav-pills am-avg-lg-9">
+          <li class=""><a href="/index.shtml">首页</a></li>
+          <li class="am-parent am-dropdown" data-am-dropdown=""> <a class="am-dropdown-toggle" data-am-dropdown-toggle="" href="javascript:;">集团概况 <span class="am-icon-angle-down"></span></a>
+            <!-- sub-menu start-->
+            <ul class="am-dropdown-content">
+              <li class="menu-item"><a href="/pub/html/201810/15/r1_1.shtml"><span class="am-icon-angle-right"></span>领导致辞</a></li>
+              <li class="menu-item"><a href="/pub/html/201810/15/r2_1.shtml"><span class="am-icon-angle-right"></span>集团简介</a></li>
+              <li class="menu-item"><a href="/pub/html/201810/15/r3_1.shtml"><span class="am-icon-angle-right"></span>组织机构</a></li>
+              <li class="menu-item"><a href="/dsj2.shtml"><span class="am-icon-angle-right"></span>发展历程</a></li>
+              <li class="menu-item"><a href="/tow_all/xxgs.aspx?c_id=572"><span class="am-icon-angle-right"></span>信息公示</a></li>
+              <li class="menu-item"><a href="/pub/html/201810/15/r6_1.shtml"><span class="am-icon-angle-right"></span>联系我们</a></li>
+            </ul>
+            <!-- sub-menu end-->
+          </li>
+          <li class="am-parent am-dropdown" data-am-dropdown=""> <a class="am-dropdown-toggle" data-am-dropdown-toggle="" href="javascript:;">新闻动态 <span class="am-icon-angle-down"></span></a>
+            <!-- sub-menu start-->
+            <ul class="am-dropdown-content">
+              <li class="menu-item"><a href="/tow_all/index.aspx?c_id=574"><span class="am-icon-angle-right"></span>公交新闻</a></li>
+              <li class="menu-item"><a href="/tow_all/index.aspx?c_id=575"><span class="am-icon-angle-right"></span>通知公告</a></li>
+              <li class="menu-item"><a href="/tow_all/index.aspx?c_id=576"><span class="am-icon-angle-right"></span>政策法规</a></li>
+              <li class="menu-item"><a href="/tow_all/index.aspx?c_id=612"><span class="am-icon-angle-right"></span>招聘培训</a></li>
+            </ul>
+            <!-- sub-menu end-->
+          </li>
+          <li class="am-parent am-dropdown" data-am-dropdown=""><a class="am-dropdown-toggle" data-am-dropdown-toggle="" href="javascript:;">便民服务 <span class="am-icon-angle-down"></span></a>
+            <!-- sub-menu start-->
+            <ul class="am-dropdown-content">
+              <li class="menu-item"><a href="/tow_all/index.aspx?c_id=578"><span class="am-icon-angle-right"></span>乘车公告</a></li>
+              <!--<li class="menu-item"><a href="/tow_all/index.aspx?c_id=579"><span class="am-icon-angle-right"></span>线路查询</a></li>-->
+              <li class="menu-item"><a href="/xyapp/" target="_blank"><span class="am-icon-angle-right"></span>襄阳出行</a></li>
+              <li class="menu-item"><a href="/tow_all/index.aspx?c_id=588"><span class="am-icon-angle-right"></span>公交线网</a></li>
+              <li class="menu-item"><a href="/tow_all/index.aspx?c_id=589"><span class="am-icon-angle-right"></span>乘车指南</a></li>
+              <li class="menu-item"><a href="/tow_all/index.aspx?c_id=580"><span class="am-icon-angle-right"></span>IC卡指南</a></li>
+              <li class="menu-item"><a href="/tow_all/index.aspx?c_id=581"><span class="am-icon-angle-right"></span>旅游出行</a></li>
+              <li class="menu-item"><a href="/tow_all/index.aspx?c_id=582"><span class="am-icon-angle-right"></span>商务租车</a></li>
+              <li class="menu-item"><a href="/tow_all/index.aspx?c_id=583"><span class="am-icon-angle-right"></span>失物招领站</a></li>
+            </ul>
+            <!-- sub-menu end-->
+          </li>
+          <li class="am-parent am-dropdown" data-am-dropdown=""> <a class="am-dropdown-toggle" data-am-dropdown-toggle="" href="javascript:;">公交业务 <span class="am-icon-angle-down"></span></a>
+            <!-- sub-menu start-->
+            <ul class="am-dropdown-content">
+              <li class="menu-item"><a href="/pub/html/201810/23/r1995_1.shtml"><span class="am-icon-angle-right"></span>公交广告</a></li>
+              <li class="menu-item"><a href="/pub/html/201810/23/r1994_1.shtml"><span class="am-icon-angle-right"></span>旅游包车</a></li>
+              <li class="menu-item"><a href="/pub/html/201810/23/r1993_1.shtml"><span class="am-icon-angle-right"></span>出租车预约</a></li>
+              <li class="menu-item"><a href="/pub/html/201810/23/r1992_1.shtml"><span class="am-icon-angle-right"></span>公交驾校</a></li>
+              <li class="menu-item"><a href="/pub/html/201810/23/r1991_1.shtml"><span class="am-icon-angle-right"></span>公交修理厂</a></li>
+              <li class="menu-item"><a href="/pub/html/201810/23/r1990_1.shtml"><span class="am-icon-angle-right"></span>公交物业</a></li>
+              <li class="menu-item"><a href="/pub/html/201810/23/r1989_1.shtml"><span class="am-icon-angle-right"></span>充电服务公司</a></li>
+              <li class="menu-item"><a href="/pub/html/201810/23/r1988_1.shtml"><span class="am-icon-angle-right"></span>公交物资供应公司</a></li>
+              <li class="menu-item"><a href="/pub/html/201911/19/r2385_1.shtml"><span class="am-icon-angle-right"></span>公交网络科技公司</a></li>
+            </ul>
+            <!-- sub-menu end-->
+          </li>
+          <li class="am-parent am-dropdown" data-am-dropdown=""> <a class="am-dropdown-toggle" data-am-dropdown-toggle="" href="javascript:;">公交文化 <span class="am-icon-angle-down"></span></a>
+            <!-- sub-menu start-->
+            <ul class="am-dropdown-content">
+              <li class="menu-item"><a href="/tow_all/index.aspx?c_id=592"><span class="am-icon-angle-right"></span>集团荣誉</a></li>
+              <li class="menu-item"><a href="/tow_all/index.aspx?c_id=593"><span class="am-icon-angle-right"></span>个人荣誉</a></li>
+              <li class="menu-item"><a href="/tow_all/index.aspx?c_id=594"><span class="am-icon-angle-right"></span>精彩活动</a></li>
+              <li class="menu-item"><a href="/tow_all/index.aspx?c_id=595"><span class="am-icon-angle-right"></span>员工风采</a></li>
+              <li class="menu-item"><a href="/tow_all/index.aspx?c_id=596"><span class="am-icon-angle-right"></span>经验交流</a></li>
+            </ul>
+            <!-- sub-menu end-->
+          </li>
+          <li class="am-parent am-dropdown" data-am-dropdown=""> <a class="am-dropdown-toggle" data-am-dropdown-toggle="" href="javascript:;">党群建设 <span class="am-icon-angle-down"></span></a>
+            <!-- sub-menu start-->
+            <ul class="am-dropdown-content">
+              <li class="menu-item"><a href="/tow_all/index.aspx?c_id=598"><span class="am-icon-angle-right"></span>廉政建设</a></li>
+              <li class="menu-item"><a href="/tow_all/index.aspx?c_id=599"><span class="am-icon-angle-right"></span>党建天地</a></li>
+              <li class="menu-item"><a href="/tow_all/index.aspx?c_id=600"><span class="am-icon-angle-right"></span>文明服务</a></li>
+              <li class="menu-item"><a href="/tow_all/index.aspx?c_id=601"><span class="am-icon-angle-right"></span>员工培训</a></li>
+              <li class="menu-item"><a href="/tow_all/index.aspx?c_id=602"><span class="am-icon-angle-right"></span>创建动态</a></li>
+              <li class="menu-item"><a href="/tow_all/index.aspx?c_id=603"><span class="am-icon-angle-right"></span>专题活动</a></li>
+            </ul>
+            <!-- sub-menu end-->
+          </li>
+          <li><a href="/tow_all/index.aspx?c_id=604">活动专区</a></li>
+          <li><a href="/tow_all/index.aspx?c_id=605">视频专区</a></li>
+        </ul>
+      </nav>
+    </div>
+    <!-- nav end -->
+
+
     <!-- container -->
     <div class="container content-width">
 
-      <div class = "spinner-div" id="spinner-div">
-        <div id="spinner" class="spinner">
-          <div class="rect1"></div>
-          <div class="rect2"></div>
-          <div class="rect3"></div>
-          <div class="rect4"></div>
-          <div class="rect5"></div>
-        </div>
-      </div>
+
 
       <div class="con-top clearfix">
         <div class="search-wrap fl">
@@ -204,7 +298,7 @@
 
         <div id="change_route" class="change-route fr">
           <h3>线路调整</h3>
-          <div class="title"> <span class="icon iconfont icon-gantanhao"></span> 本线路包含因修路等原因造成的临时绕行 </div>
+          <div class="title"> <span class="icon iconfont icon-gantanhao"></span> 本线路包含因修路等原因造成的临时调整 </div>
 
           <div id="changeLine_wrap">
           </div>
@@ -215,7 +309,7 @@
     <!-- container end -->
 
     <!-- footer start-->
-    <div class="footer content-width am-g">
+    <div class="pagefooter"><div class="footer content-width am-g">
       <div class="am-u-sm-10">
         <div class="am-cf">
           <div class="am-fl"><img src="./assets/images/logo_b.png" /></div>
@@ -237,7 +331,7 @@
         </div>
       </div>
       <div class="am-u-sm-2"><img src="./assets/images/wxbg.png" /></div>
-    </div>
+    </div></div>
     <!-- footer end -->
 
     <script src="./static/layui/layui.js"></script>

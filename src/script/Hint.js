@@ -28,7 +28,6 @@ export default class Hint {
     });
 
     this.wrap.parent().on('keydown', (e) => {
-      console.log(e);
       //  "ArrowUp" "ArrowDown" "Enter"
 
       if (e.key === 'ArrowDown') {
