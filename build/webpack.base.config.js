@@ -53,10 +53,10 @@ module.exports = {
       inject: 'body', // 生成的js引入在main的'head'
       // 传入false则不引入生成的js,可以在html中写<script src="<%= HtmlWebpackPlugin.files.chunks.main.entry"></script> 这样也可以获取到main.js 的文件
       chunks: ['index'], // 需要哪个js就写哪个
-      minify: { // 压缩
-        removeComments: true, // 删除注释
-        collapseInlineTagWhitespace: true, // 删除空格
-      },
+      // minify: { // 压缩
+      //   removeComments: true, // 删除注释
+      //   collapseInlineTagWhitespace: true, // 删除空格
+      // },
     }),
   ],
   module: {
