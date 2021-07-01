@@ -181,9 +181,23 @@ export default class Map {
   }
 
 
-  lineSearchByName(line, cb) {
+  lineSearchByName(line, cb = () => {}) {
     this.lineSearch.search(line, (status, result) => {
-      if (cb) {
+      if (status === 'complete' && result.lineInfo.length > 0) {
+        // 过滤枣阳等数据
+        const lineInfo = [];
+        const reg = /(宜城|谷城|南漳|保康|枣阳|老河口)+/;
+        result.lineInfo.forEach((item) => {
+          if (reg.test(item.name) || reg.test(item.company)) {
+            // ineInfo.push(item);
+          } else {
+            lineInfo.push(item);
+          }
+        });
+
+        result.lineInfo = lineInfo;
+        cb(status, result);
+      } else {
         cb(status, result);
       }
       console.log('公交数据', result);

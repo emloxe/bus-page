@@ -277,8 +277,8 @@ function shoucang(sTitle,sURL)
   0%,
   40%,
   100% {
-      transform: scaleY(0.4);
-      -webkit-transform: scaleY(0.4);
+    transform: scaleY(0.4);
+    -webkit-transform: scaleY(0.4);
   }
 
   20% {
@@ -288,7 +288,7 @@ function shoucang(sTitle,sURL)
 }
     </style>
   </head>
-  <body>
+  <body class="">
 
 
     <div class = "spinner-div" id="spinner-div">
@@ -435,60 +435,83 @@ function shoucang(sTitle,sURL)
 
           <h3>襄阳公交查询</h3>
 
-          <div class="layui-tab layui-tab-card">
-            <ul class="layui-tab-title">
-              <li class="layui-this">站点查询</li>
-              <li>线路查询</li>
-            </ul>
-            <div class="layui-tab-content">
-              <div class="layui-tab-item layui-show">
-                <div class="form-content">
-                  <div class="top-form">
-                    <p class="label">站名</label>
-                    <div class="">
-                      <input id="search_busStop_inpt" type="text" placeholder="请输入公交站名" class="layui-input" autocomplete="off">
-                      <div id="busStop_hint" class="hint-wrap">
+
+          <div class="tab-wrap">
+            <div class="layui-tab layui-tab-card">
+              <ul class="layui-tab-title">
+                <li class="layui-this">线路查询</li>
+                <li class="">站点查询</li>
+                <li>换乘查询</li>
+              </ul>
+              <div class="layui-tab-content">
+                <div class="layui-tab-item layui-show">
+                  <div class="form-content">
+                    <div class="top-form">
+                      <p class="label">线路名</label>
+                      <div class="">
+                        <input id="search_busLine_inpt" type="text" placeholder="请输入公交线路名，如1路" class="layui-input" autocomplete="off">
+                        <div id="busLine_hint" class="hint-wrap">
+                        </div>
                       </div>
+                    </div>
+
+                    <div class="bottom-btn">
+                      <button id="search_busLine_btn" class="layui-btn" >立即查询</button>
                     </div>
                   </div>
 
-                  <div class="bottom-btn">
-                    <button id="search_busStop_btn" class="layui-btn" >立即查询</button>
-                  </div>
                 </div>
-
-              </div>
-              <div class="layui-tab-item">
-
-                <div class="form-content">
-                  <div class="top-form">
-                    <div class="item fl"  style="width: 45%;">
-                      <p class="label">起始站</p>
-                      <input id="search_transfer_inpt1" type="text"  placeholder="请输入起始站" class="layui-input" autocomplete="off">
-                      <div id="start_hint" class="hint-wrap">
+                <div class="layui-tab-item">
+                  <div class="form-content">
+                    <div class="top-form">
+                      <p class="label">站名</label>
+                      <div class="">
+                        <input id="search_busStop_inpt" type="text" placeholder="请输入公交站名" class="layui-input" autocomplete="off">
+                        <div id="busStop_hint" class="hint-wrap">
+                        </div>
                       </div>
                     </div>
 
-                    <div class="item fl"  style="width: 10%;">
-                      <span id="change_direction" class="icon iconfont icon-jiaohuan"></span>
-                    </div>
-
-                    <div class="item fl"  style="width: 45%;">
-                      <p class="label">目的站</p>
-                      <input id="search_transfer_inpt2" type="text"  placeholder="请输入目的站" class="layui-input" autocomplete="off">
-                      <div id="end_hint" class="hint-wrap">
-                      </div>
+                    <div class="bottom-btn">
+                      <button id="search_busStop_btn" class="layui-btn" >立即查询</button>
                     </div>
                   </div>
 
-                  <div class="bottom-btn">
-                    <button id="search_navigationRoute_btn" class="layui-btn" lay-submit lay-filter="formDemo">立即查询</button>
-                  </div>
                 </div>
+                <div class="layui-tab-item">
 
+                  <div class="form-content">
+                    <div class="top-form">
+                      <div class="item fl"  style="width: 45%;">
+                        <p class="label">起始地点</p>
+                        <input id="search_transfer_inpt1" type="text"  placeholder="请输入" class="layui-input" autocomplete="off">
+                        <div id="start_hint" class="hint-wrap">
+                        </div>
+                      </div>
+
+                      <div class="item fl"  style="width: 10%;">
+                        <span id="change_direction" class="icon iconfont icon-jiaohuan"></span>
+                      </div>
+
+                      <div class="item fl"  style="width: 45%;">
+                        <p class="label">目的地点</p>
+                        <input id="search_transfer_inpt2" type="text"  placeholder="请输入" class="layui-input" autocomplete="off">
+                        <div id="end_hint" class="hint-wrap">
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="bottom-btn">
+                      <button id="search_navigationRoute_btn" class="layui-btn" lay-submit lay-filter="formDemo">立即查询</button>
+                    </div>
+                  </div>
+
+                </div>
               </div>
             </div>
           </div>
+
+
 
         </div>
         <div id="map_wrap" class="map-wrap fr"></div>

@@ -1,6 +1,33 @@
 import { isString, getTime } from './util';
 
 
+export const createBusLineTitleHtml = (data) => {
+  const { $ } = layui;
+  const wrap = $('#map_result');
+
+  wrap.html('');
+
+  const lis = data.reduce((accumulator, {
+    shortName,
+    id,
+  }, index) => {
+    accumulator += `<a class="busLine-btn ${index ? '' : 'active'}" id="busLine_${id}" href="##">${shortName}</a>`;
+    return accumulator;
+  }, '');
+
+  const dom = $(`
+      <div class="result-title clearfix">
+        <span class="icon iconfont icon-tishi fl"></span>
+        <p class="fr">
+        共查询到 <span style="text-decoration: underline;">${data.length}</span> 条公交线路。
+        ${lis}
+        </p>
+      </div>
+      `);
+
+  wrap.append(dom);
+};
+
 /**
  * 创建  站点搜索 全部信息栏
  * @param {Array} data
@@ -75,7 +102,7 @@ export const createBusStopCenterHtml = (wrap, data, currBusName) => {
     }
     accumulator2
         += `<li class="${currentValue.name === currBusName ? 'active' : ''}">
-            <a href="##" id=${currentValue.id} title="${currentValue.name}" style="max-height: 170px;">${currentValue.name}</a></li>`;
+            <a class="bus-id" href="##" id=${currentValue.id} title="${currentValue.name}" style="max-height: 170px;">${currentValue.name}</a></li>`;
 
     if (index % 25 === 24) {
       accumulator2 += '</ol>';
@@ -90,6 +117,27 @@ export const createBusStopCenterHtml = (wrap, data, currBusName) => {
    * 站点查询未查询到时，提示html
    * @param {*} busStopName
    */
+export const createBusLineErrHtml = (busLineName) => {
+  const { $ } = layui;
+  const wrap = $('#map_result');
+  const html = `<div class="cc-content">
+        <div class="bus-plan error">
+          <!-- <p>搜索“${busLineName}”结果：</p> -->
+          <!-- <ul><li>没有 ${busLineName} 这个站点,请输入准确站点!</li></ul> -->
+          <p class="error-title"><img class="icon" src="./static/images/none.png"
+              alt="">无法查询到该条公交线路信息</p>
+          <ul class="error-list">
+            <li>没有查询到 <span class="error-name">${busLineName}</span> 该条公交线路，请输入准确的线路名称!</li>
+          </ul>
+        </div>
+      </div>`;
+  wrap.html(html);
+};
+
+/**
+   * 站点查询未查询到时，提示html
+   * @param {*} busStopName
+   */
 export const createBusStopErrHtml = (busStopName) => {
   const { $ } = layui;
   const wrap = $('#map_result');
@@ -97,7 +145,7 @@ export const createBusStopErrHtml = (busStopName) => {
         <div class="bus-plan error">
           <!-- <p>搜索“${busStopName}”结果：</p> -->
           <!-- <ul><li>没有 ${busStopName} 这个站点,请输入准确站点!</li></ul> -->
-          <p class="error-title"><img class="icon" src="https://source.8684.cn/pcbus/assets/images/none.png"
+          <p class="error-title"><img class="icon" src="./static/images/none.png"
               alt="">无法查询到该站点信息</p>
           <ul class="error-list">
             <li>没有查询到 <span class="error-name">${busStopName}</span> 这个站点，请输入准确的站点名称!</li>
@@ -144,7 +192,7 @@ export const createTransferHtml = ({ start, end }, plans) => {
   const plansHtml = plans.reduce((accumulator, currentValue, index) => {
     const lis = currentValue.segments.reduce((accumulator2, currentValue2, index2) => {
       if (currentValue2.transit_mode === 'BUS') {
-        const { transit, time } = currentValue2;
+        const { transit } = currentValue2;
         const {
           off_station: off, on_station: on, lines, via_num: num,
         } = transit;
@@ -162,7 +210,7 @@ export const createTransferHtml = ({ start, end }, plans) => {
         }
         accumulator2 += `
         <li class="site">
-        <i class="iconfont iconbus1"></i><a href="##" title="${name}">${name}</a> 共有${num + 1}站，预计${getTime(time)}
+        <i class="iconfont iconbus1"></i><a href="##" title="${name}">${name}</a> 共有${num + 1}站
         </li>
         <li class="bus">
         <span><a href="##" title="${on.name}">${on.name}</a>上车</span>
@@ -177,7 +225,7 @@ export const createTransferHtml = ({ start, end }, plans) => {
 
     const busPlanHtml = `<div class="bus-plan">
       <div class="plan-head"><span class="plan-no">方案${index + 1}</span>
-        <p>总行程${Math.round(currentValue.distance / 100) / 10}公里，乘车${Math.round(currentValue.transit_distance / 100) / 10}公里，步行${currentValue.walking_distance}米，全程约${getTime(currentValue.time)}</p>
+        <p>总行程${Math.round(currentValue.distance / 100) / 10}公里，乘车${Math.round(currentValue.transit_distance / 100) / 10}公里，全程约${getTime(currentValue.time)}</p>
       </div>
       <ul class="plan-list2">
         <li class="site"><i class="iconfont iconstart"></i><a href="##" title="${start}">${start}</a>

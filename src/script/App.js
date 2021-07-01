@@ -3,11 +3,13 @@ import Hint from './Hint';
 
 import {
   busLinesArrange, getName,
+  createBusLineTitleHtml, createBusLineErrHtml,
   createBusStopTitleHtml, createBusStopTopHtml, createBusStopCenterHtml, createBusStopErrHtml,
   createTransferHtml, createTransferErrHtml, createTransferTitleHtml,
 } from './utils/index';
 
 
+// eslint-disable-next-line no-unused-vars
 let busStopVal = null;
 let startVal = null;
 let endVal = null;
@@ -51,11 +53,46 @@ class App {
       }
     });
 
+    $('#map_result').on('click', '.bus-id', (e) => {
+      const id = $(e.currentTarget).attr('id');
+      this.searchBusStopHandler('id', id, () => {
+      });
+    });
+
+
+    this.addBusLineEvent();
     this.addBusStopEvent();
     this.addTransferEvent();
 
     this.addChangePlaneEvent();
     this.addSearchHintEvent();
+  }
+
+
+  addBusLineEvent() {
+    const { $ } = layui;
+    let btn1canUse = true;
+    const btn1 = $('#search_busLine_btn');
+    const busLineInpt = $('#search_busLine_inpt');
+
+    btn1.on('click', () => {
+      if (!btn1canUse) {
+        return;
+      }
+      btn1.addClass('layui-btn-disabled');
+      btn1canUse = false;
+
+      const value = busLineInpt.val();
+      if (!value.trim()) {
+        layui.layer.msg('输入无效');
+        return;
+      }
+
+      this.searchBusLineHandler(value, () => {
+        btn1canUse = true;
+        btn1.removeClass('layui-btn-disabled');
+      });
+    });
   }
 
 
@@ -207,6 +244,34 @@ class App {
     }
   }
 
+
+  searchBusLineHandler(iptValue, cb = () => {}) {
+    const handler = (status, result) => {
+      if (status === 'complete' && result.lineInfo.length > 0) {
+        const lineArr = busLinesArrange(result.lineInfo);
+        const nameArr = lineArr.map(({ shortName }) => shortName);
+        this.showChangeLine([...new Set(nameArr)]);
+
+        createBusLineTitleHtml(lineArr);
+        lineArr.forEach((line, index) => {
+          const wrap = createBusStopTopHtml(line);
+          createBusStopCenterHtml(wrap, line, null);
+        });
+        this.mapInstance.drawBusLine(lineArr[0]);
+      } else {
+        createBusLineErrHtml(layui.$('#search_busLine_inpt').val());
+      }
+
+      cb();
+    };
+
+
+    this.mapInstance.lineSearchByName(iptValue, (status, result) => {
+      handler(status, result);
+    });
+  }
+
+
   /**
    * 根据公交站点 查询公交线路
    * @param {String} type [name, id]
@@ -332,7 +397,6 @@ class App {
 
   showChangeLine(arr) {
     const { $ } = layui;
-
 
     const htmlRander = curr => `<div class="one">
       <div class="clearfix"><h5 class="fl">${curr.busName}</h5> <span class="fr"> ${curr.startTime} <i class="start">起</i>   ${curr.endTime ? `|  ${curr.endTime} <i>止</i>` : ''}</span></div>

@@ -37,8 +37,9 @@ const getInterval = (name) => {
 /**
  * 经过某一个公交站点的数据整理
  * @param {Array} buslines
+ * @param {Boolean} 是否需要去重
  */
-export function busLinesArrange(buslines) {
+export function busLinesArrange(buslines, bool = true) {
   const shortNameArr = [];
 
   return buslines.reduce((accumulator, line) => {
@@ -46,12 +47,20 @@ export function busLinesArrange(buslines) {
     const shortName = getName(name);
     const interval = getInterval(name);
 
-    if (!name.includes('停运') && !shortNameArr.includes(shortName)) {
+    if (bool) {
+      if (!name.includes('停运') && !shortNameArr.includes(shortName)) {
+        line.shortName = shortName;
+        line.interval = interval;
+        shortNameArr.push(shortName);
+        accumulator.push(line);
+      }
+    } else {
       line.shortName = shortName;
       line.interval = interval;
-      shortNameArr.push(shortName);
       accumulator.push(line);
     }
+
+
     return accumulator;
   }, []);
 }
