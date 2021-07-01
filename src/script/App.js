@@ -53,6 +53,8 @@ class App {
       }
     });
 
+
+    // 点击公交站点
     $('#map_result').on('click', '.bus-id', (e) => {
       const id = $(e.currentTarget).attr('id');
       this.searchBusStopHandler('id', id, () => {

@@ -191,6 +191,7 @@ export default class Map {
           if (reg.test(item.name) || reg.test(item.company)) {
             // ineInfo.push(item);
           } else {
+            setLineDataById(item.id, { info: 'OK', lineInfo: [item] });
             lineInfo.push(item);
           }
         });
