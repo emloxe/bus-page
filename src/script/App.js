@@ -9,9 +9,7 @@ import {
 
 
 let busStopVal = null;
-// eslint-disable-next-line no-unused-vars
 let startVal = null;
-// eslint-disable-next-line no-unused-vars
 let endVal = null;
 
 class App {
@@ -283,7 +281,7 @@ class App {
 
         this.mapInstance.drawTransferByIndex(0);
         createTransferTitleHtml(result.plans);
-        createTransferHtml({ start: result.originName, end: result.destinationName }, result.plans);
+        createTransferHtml({ start: startInpt.val(), end: endInpt.val() }, result.plans);
       } else {
         createTransferErrHtml({ start: startInpt.val(), end: endInpt.val() });
       }
@@ -307,10 +305,10 @@ class App {
       hintInstance.hide();
       return;
     }
-    this.mapInstance.searchStation(val, (status, result) => {
+    this.mapInstance.searchStationByBounds(val, (status, result) => {
       console.log('busStopSearchHintHandler', result);
-      if (status === 'complete' && result.stationInfo.length > 0) {
-        hintInstance.show(result.stationInfo);
+      if (status === 'complete' && result.poiList && result.poiList.pois.length > 0) {
+        hintInstance.show(result.poiList.pois);
       } else {
         hintInstance.noResult();
       }

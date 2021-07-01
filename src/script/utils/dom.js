@@ -1,3 +1,5 @@
+import { isString, getTime } from './util';
+
 
 /**
  * 创建  站点搜索 全部信息栏
@@ -141,42 +143,47 @@ export const createTransferHtml = ({ start, end }, plans) => {
   const wrap = $('#map_result');
   const plansHtml = plans.reduce((accumulator, currentValue, index) => {
     const lis = currentValue.segments.reduce((accumulator2, currentValue2, index2) => {
-      if (index2 !== (currentValue.segments - 1) && currentValue2.time < 30) {
-        return accumulator2;
-      }
-
-
-      if (currentValue2.transit_mode === 'WALK') {
-        const [txt, busStopName] = currentValue2.instruction.split('到达');
-        accumulator2 += `<li class="walk"><i class="iconfont iconwalk"></i><span>${txt} 至</span></li>`;
-        if (busStopName) {
-          accumulator2 += `<li class="site"><i class="iconfont iconbus1"></i><a href="#" title="${busStopName}">${busStopName}</a>`;
-        }
-      }
-
       if (currentValue2.transit_mode === 'BUS') {
-        if (currentValue2.instruction.includes('途径')) {
-          // eslint-disable-next-line no-unused-vars
-          const [busLineName, a, stopNum, b, busStopName] = currentValue2.instruction.split(/['途径'|'到达']/);
-          accumulator2 += `<li class="bus"><span><a href="##" title="${busLineName}">${busLineName}</a>乘坐 ${currentValue2.transit.via_num + 1} 站</span></li>`;
-          if (busStopName) {
-            accumulator2 += `<li class="site"><i class="iconfont iconbus1"></i><a href="##" title="${busStopName}">${busStopName}</a>`;
-          }
+        const { transit, time } = currentValue2;
+        const {
+          off_station: off, on_station: on, lines, via_num: num,
+        } = transit;
+        const { name, stime, etime } = lines[0];
+        let stime1; let
+          etime1;
+        if (isString(stime) && isString(etime)) {
+          stime1 = stime.split('');
+          stime1.splice(2, 0, ':');
+          stime1 = stime1.join('');
+
+          etime1 = etime.split('');
+          etime1.splice(2, 0, ':');
+          etime1 = etime1.join('');
         }
+        accumulator2 += `
+        <li class="site">
+        <i class="iconfont iconbus1"></i><a href="##" title="${name}">${name}</a> 共有${num + 1}站，预计${getTime(time)}
+        </li>
+        <li class="bus">
+        <span><a href="##" title="${on.name}">${on.name}</a>上车</span>
+        <span><a href="##" title="${off.name}">${off.name}</a>下车</span>
+        ${isString(stime) && isString(etime) ? `<div style="font-size: 13px">首：${stime1} <i style="display:inline-block;width:10px;"></i>  末：${etime1}</div>` : ''}
+        </li>
+        `;
       }
 
       return accumulator2;
     }, '');
 
-    const busPlanHtml = `<div class="bus-plan" data-q="武昌火车站" data-q1="康福路楚平路">
+    const busPlanHtml = `<div class="bus-plan">
       <div class="plan-head"><span class="plan-no">方案${index + 1}</span>
-        <p>总行程${Math.round(currentValue.distance / 100) / 10}公里，乘车${Math.round(currentValue.transit_distance / 100) / 10}公里，步行${currentValue.walking_distance}米，全程约${Math.round(currentValue.time / 60)}分钟</p>
+        <p>总行程${Math.round(currentValue.distance / 100) / 10}公里，乘车${Math.round(currentValue.transit_distance / 100) / 10}公里，步行${currentValue.walking_distance}米，全程约${getTime(currentValue.time)}</p>
       </div>
       <ul class="plan-list2">
-        <li class="site"><i class="iconfont iconstart"></i><a href="##" title="起点">起点</a>
+        <li class="site"><i class="iconfont iconstart"></i><a href="##" title="${start}">${start}</a>
         </li>
         ${lis}
-        <li class="site end"><i class="iconfont iconend"></i><a href="##" title="终点">终点</a>
+        <li class="site end"><i class="iconfont iconend"></i><a href="##" title="${end}">${end}</a>
       </ul>
     </div>`;
 

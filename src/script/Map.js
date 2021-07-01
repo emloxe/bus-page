@@ -3,7 +3,6 @@ import {
   getBusLineNode, getLineDataById, setLineDataById, getTransferNode,
 } from './utils/index';
 
-
 // eslint-disable-next-line no-unused-vars
 let transferArr = [];
 
@@ -28,13 +27,12 @@ export default class Map {
 
   initSearch() {
     // 站点查询
-    this.stationSearch = new AMap.PlaceSearch({
+    this.stationSearch = new AMap.StationSearch({
       type: '公交', // 兴趣点类别
       pageSize: 10, // 单页显示结果条数
       pageIndex: 1, // 页码
       city: '襄阳', // 兴趣点城市
       citylimit: true, // 是否强制限制在设置的城市内搜索
-      autoFitView: true, // 是否自动调整地图视野使绘制的 Marker点都处于视口的可见范围
     });
 
     // 公交线路查询
@@ -57,7 +55,15 @@ export default class Map {
     this.placeSearch = new AMap.PlaceSearch({
       city: '襄阳',
     });
+
+    this.placeSearchBus = new AMap.PlaceSearch({
+      type: '公交',
+      pageSize: 10,
+      pageIndex: 1,
+      city: '襄阳',
+    });
   }
+
 
   /**
    * 根据名称 查询经过站点的 公交数据
@@ -66,9 +72,37 @@ export default class Map {
    * @param {Function} cb
    */
   searchStation(value, cb = () => {}) {
-    this.stationSearch.searchInBounds(value, globalConfig.polygonArr, (status, result) => {
+    this.stationSearch.search(value, (status, result) => {
+      console.log('站点数据1', result);
+
+      if (status === 'complete' && result.stationInfo.length > 0) {
+        // 过滤枣阳等数据
+        const stationInfo = [];
+        const adcodeArr = ['420602', '420606', '420607'];
+        result.stationInfo.forEach((item) => {
+          if (adcodeArr.includes(item.adcode)) {
+            stationInfo.push(item);
+          }
+        });
+
+        result.stationInfo = stationInfo;
+        cb(status, result);
+      } else {
+        cb(status, result);
+      }
+      console.log('站点数据2', result);
+    });
+  }
+
+  /**
+   * 在限定区域内 查询站点
+   * @param {*} value
+   * @param {*} cb
+   */
+  searchStationByBounds(value, cb = () => {}) {
+    this.placeSearchBus.searchInBounds(value, globalConfig.polygonArr, (status, result) => {
       cb(status, result);
-      console.log('站点数据', result);
+      console.log('区域站点数据', result);
     });
   }
 
@@ -86,12 +120,12 @@ export default class Map {
   }
 
   /**
-   * 根据关键词查询数据
+   * 根据关键词 查询襄阳市区数据数据
    * @param {*} keyword
    * @param {*} cb
    */
   searchPlace(keyword, cb = () => {}) {
-    this.placeSearch.search(keyword, (status, result) => {
+    this.placeSearch.searchInBounds(keyword, globalConfig.polygonArr, (status, result) => {
       // 搜索成功时，result即是对应的匹配数据
       console.log(result);
       cb(status, result);
