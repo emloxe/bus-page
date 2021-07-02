@@ -210,7 +210,7 @@ export const createTransferHtml = ({ start, end }, plans) => {
         }
         accumulator2 += `
         <li class="site">
-        <i class="iconfont iconbus1"></i><a href="##" title="${name}">${name}</a> 共有${num + 1}站
+        <i class="iconfont iconbus1"></i><a href="##" title="${name}">${name}</a> 乘坐${num + 1}站
         </li>
         <li class="bus">
         <span><a href="##" title="${on.name}">${on.name}</a>上车</span>

@@ -87,6 +87,8 @@ class App {
       const value = busLineInpt.val();
       if (!value.trim()) {
         layui.layer.msg('输入无效');
+        btn1canUse = true;
+        btn1.removeClass('layui-btn-disabled');
         return;
       }
 
@@ -122,6 +124,8 @@ class App {
         const value = busStopInpt.val();
         if (!value.trim()) {
           layui.layer.msg('输入无效');
+          btn1canUse = true;
+          btn1.removeClass('layui-btn-disabled');
           return;
         }
 
@@ -159,8 +163,10 @@ class App {
       } else {
         const start = startInpt.val();
         const end = endInpt.val();
-        if (!start.trim() && !start.trim()) {
+        if (!start.trim() && !end.trim()) {
           layui.layer.msg('输入无效');
+          btn2canUse = true;
+          btn2.removeClass('layui-btn-disabled');
           return;
         }
         this.searchTransferHandler('name', { start, end }, () => {
@@ -251,8 +257,8 @@ class App {
     const handler = (status, result) => {
       if (status === 'complete' && result.lineInfo.length > 0) {
         const lineArr = busLinesArrange(result.lineInfo);
-        const nameArr = lineArr.map(({ shortName }) => shortName);
-        this.showChangeLine([...new Set(nameArr)]);
+        // const nameArr = lineArr.map(({ shortName }) => shortName);
+        // this.showChangeLine([...new Set(nameArr)]);
 
         createBusLineTitleHtml(lineArr);
         lineArr.forEach((line, index) => {
@@ -287,8 +293,8 @@ class App {
         const busName = getName(result.stationInfo[0].name);
         createBusStopTitleHtml(lineArr, busName);
 
-        const nameArr = lineArr.map(({ shortName }) => shortName);
-        this.showChangeLine(nameArr);
+        // const nameArr = lineArr.map(({ shortName }) => shortName);
+        // this.showChangeLine(nameArr);
 
         lineArr.forEach((line, index) => {
           const wrap = createBusStopTopHtml(line);
@@ -331,20 +337,20 @@ class App {
 
     const handler = (status, result) => {
       if (status === 'complete' && result.plans) {
-        const nameArr = result.plans.reduce((arr1, { segments }) => {
-          arr1.push(...segments.reduce((arr2,
-            // eslint-disable-next-line camelcase
-            { instruction, transit_mode }) => {
-            // eslint-disable-next-line camelcase
-            if (transit_mode === 'BUS') {
-              arr2.push(instruction.split('(')[0].slice(2));
-            }
+        // const nameArr = result.plans.reduce((arr1, { segments }) => {
+        //   arr1.push(...segments.reduce((arr2,
+        //     // eslint-disable-next-line camelcase
+        //     { instruction, transit_mode }) => {
+        //     // eslint-disable-next-line camelcase
+        //     if (transit_mode === 'BUS') {
+        //       arr2.push(instruction.split('(')[0].slice(2));
+        //     }
 
-            return arr2;
-          }, []));
-          return arr1;
-        }, []);
-        this.showChangeLine(nameArr);
+        //     return arr2;
+        //   }, []));
+        //   return arr1;
+        // }, []);
+        // this.showChangeLine(nameArr);
 
         this.mapInstance.drawTransferByIndex(0);
         createTransferTitleHtml(result.plans);
@@ -399,6 +405,7 @@ class App {
 
   showChangeLine(arr) {
     const { $ } = layui;
+    let isChang = 0;
 
     const htmlRander = curr => `<div class="one">
       <div class="clearfix"><h5 class="fl">${curr.busName}</h5> <span class="fr"> ${curr.startTime} <i class="start">起</i>   ${curr.endTime ? `|  ${curr.endTime} <i>止</i>` : ''}</span></div>
@@ -414,9 +421,9 @@ class App {
         success(result) {
           if (!result.code && result.data.length > 0) {
             const html = result.data.reduce((all, curr, index) => {
-              if (index < globalConfig.maxBusChangeNum) {
-                all += htmlRander(curr);
-              }
+              // if (index < globalConfig.maxBusChangeNum) {
+              all += htmlRander(curr);
+              // }
               return all;
             }, '');
             $('#changeLine_wrap').html(html);
@@ -427,7 +434,6 @@ class App {
       });
     } else {
       // // eslint-disable-next-line no-unused-vars
-      let isChang = 0;
       arr.forEach((str) => {
         $.ajax({
           url: `${globalConfig.busChange}?busName=${str}`,
