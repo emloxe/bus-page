@@ -59,8 +59,6 @@ export function getBusLineNode(line) {
 
 
 export function getTransferNode(line) {
-  console.log('line', line);
-
   const nodeArr = [];
 
 

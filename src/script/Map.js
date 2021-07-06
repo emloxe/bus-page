@@ -73,7 +73,7 @@ export default class Map {
    */
   searchStation(value, cb = () => {}) {
     this.stationSearch.search(value, (status, result) => {
-      console.log('站点数据1', result);
+      // console.log('站点数据1', result);
 
       if (status === 'complete' && result.stationInfo.length > 0) {
         // 过滤枣阳等数据
@@ -90,7 +90,7 @@ export default class Map {
       } else {
         cb(status, result);
       }
-      console.log('站点数据2', result);
+      // console.log('站点数据2', result);
     });
   }
 
@@ -102,7 +102,7 @@ export default class Map {
   searchStationByBounds(value, cb = () => {}) {
     this.placeSearchBus.searchInBounds(value, globalConfig.polygonArr, (status, result) => {
       cb(status, result);
-      console.log('区域站点数据', result);
+      // console.log('区域站点数据', result);
     });
   }
 
@@ -115,7 +115,7 @@ export default class Map {
   searchStationById(id, cb = () => {}) {
     this.stationSearch.searchById(id, (status, result) => {
       cb(status, result);
-      console.log('站点数据', result);
+      // console.log('站点数据', result);
     });
   }
 
@@ -127,7 +127,7 @@ export default class Map {
   searchPlace(keyword, cb = () => {}) {
     this.placeSearch.searchInBounds(keyword, globalConfig.polygonArr, (status, result) => {
       // 搜索成功时，result即是对应的匹配数据
-      console.log(result);
+      // console.log(result);
       cb(status, result);
     });
   }
@@ -155,7 +155,7 @@ export default class Map {
         cb(status, result);
       }
 
-      console.log('换乘数据', result);
+      // console.log('换乘数据', result);
     });
   }
 
@@ -175,7 +175,7 @@ export default class Map {
           cb(status, result);
         }
 
-        console.log('换乘数据', result);
+        // console.log('换乘数据', result);
       },
     );
   }
@@ -192,6 +192,8 @@ export default class Map {
             // ineInfo.push(item);
           } else {
             setLineDataById(item.id, { info: 'OK', lineInfo: [item] });
+
+
             lineInfo.push(item);
           }
         });
@@ -201,7 +203,7 @@ export default class Map {
       } else {
         cb(status, result);
       }
-      console.log('公交数据', result);
+      // console.log('公交数据', result);
     });
   }
 
@@ -227,7 +229,7 @@ export default class Map {
         }
 
         cb(status, result);
-        console.log('公交线路数据', result);
+        // console.log('公交线路数据', result);
       });
     }
   }

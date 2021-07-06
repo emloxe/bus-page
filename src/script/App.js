@@ -2,12 +2,18 @@ import Map from './Map';
 import Hint from './Hint';
 
 import {
-  busLinesArrange, getName,
-  createBusLineTitleHtml, createBusLineErrHtml,
-  createBusStopTitleHtml, createBusStopTopHtml, createBusStopCenterHtml, createBusStopErrHtml,
-  createTransferHtml, createTransferErrHtml, createTransferTitleHtml,
+  busLinesArrange,
+  getName,
+  createBusLineTitleHtml,
+  createBusLineErrHtml,
+  createBusStopTitleHtml,
+  createBusStopTopHtml,
+  createBusStopCenterHtml,
+  createBusStopErrHtml,
+  createTransferHtml,
+  createTransferErrHtml,
+  createTransferTitleHtml,
 } from './utils/index';
-
 
 // eslint-disable-next-line no-unused-vars
 let busStopVal = null;
@@ -53,14 +59,11 @@ class App {
       }
     });
 
-
     // 点击公交站点
     $('#map_result').on('click', '.bus-id', (e) => {
       const id = $(e.currentTarget).attr('id');
-      this.searchBusStopHandler('id', id, () => {
-      });
+      this.searchBusStopHandler('id', id, () => {});
     });
-
 
     this.addBusLineEvent();
     this.addBusStopEvent();
@@ -69,7 +72,6 @@ class App {
     this.addChangePlaneEvent();
     this.addSearchHintEvent();
   }
-
 
   addBusLineEvent() {
     const { $ } = layui;
@@ -99,14 +101,12 @@ class App {
     });
   }
 
-
   // 站点查询按钮监听
   addBusStopEvent() {
     const { $ } = layui;
     let btn1canUse = true;
     const btn1 = $('#search_busStop_btn');
     const busStopInpt = $('#search_busStop_inpt');
-
 
     btn1.on('click', () => {
       if (!btn1canUse) {
@@ -137,7 +137,6 @@ class App {
     });
   }
 
-
   // 公交线路查询按钮监听
   addTransferEvent() {
     const { $ } = layui;
@@ -156,10 +155,14 @@ class App {
       btn2canUse = false;
 
       if (startVal && endVal) {
-        this.searchTransferHandler('lngLat', { start: startVal.location, end: endVal.location }, () => {
-          btn2canUse = true;
-          btn2.removeClass('layui-btn-disabled');
-        });
+        this.searchTransferHandler(
+          'lngLat',
+          { start: startVal.location, end: endVal.location },
+          () => {
+            btn2canUse = true;
+            btn2.removeClass('layui-btn-disabled');
+          },
+        );
       } else {
         const start = startInpt.val();
         const end = endInpt.val();
@@ -252,13 +255,28 @@ class App {
     }
   }
 
-
+  // 公交线路查询
   searchBusLineHandler(iptValue, cb = () => {}) {
     const handler = (status, result) => {
       if (status === 'complete' && result.lineInfo.length > 0) {
-        const lineArr = busLinesArrange(result.lineInfo);
+        const lineArr2 = busLinesArrange(result.lineInfo);
         // const nameArr = lineArr.map(({ shortName }) => shortName);
         // this.showChangeLine([...new Set(nameArr)]);
+
+        // 针对查询公交19路时，把19点之后运行点公交也查询到进行处理
+        const lineArr = lineArr2.reduce((arr, curr) => {
+          const fisrtNameArr = curr.shortName.split('(');
+          if (fisrtNameArr.length > 1) {
+            const fisrtName = fisrtNameArr[0];
+            if (new RegExp(iptValue, 'i').test(fisrtName)) {
+              arr.push(curr);
+            }
+          } else {
+            arr.push(curr);
+          }
+
+          return arr;
+        }, []);
 
         createBusLineTitleHtml(lineArr);
         lineArr.forEach((line, index) => {
@@ -273,12 +291,10 @@ class App {
       cb();
     };
 
-
     this.mapInstance.lineSearchByName(iptValue, (status, result) => {
       handler(status, result);
     });
   }
-
 
   /**
    * 根据公交站点 查询公交线路
@@ -324,7 +340,6 @@ class App {
       });
     }
   }
-
 
   /**
    * 根据公交站点 查询公交线路
@@ -379,7 +394,6 @@ class App {
       return;
     }
     this.mapInstance.searchStationByBounds(val, (status, result) => {
-      console.log('busStopSearchHintHandler', result);
       if (status === 'complete' && result.poiList && result.poiList.pois.length > 0) {
         hintInstance.show(result.poiList.pois);
       } else {
@@ -402,13 +416,14 @@ class App {
     });
   }
 
-
   showChangeLine(arr) {
     const { $ } = layui;
     let isChang = 0;
 
     const htmlRander = curr => `<div class="one">
-      <div class="clearfix"><h5 class="fl">${curr.busName}</h5> <span class="fr"> ${curr.startTime} <i class="start">起</i>   ${curr.endTime ? `|  ${curr.endTime} <i>止</i>` : ''}</span></div>
+      <div class="clearfix"><h5 class="fl">${curr.busName}</h5> <span class="fr"> ${
+  curr.startTime
+} <i class="start">起</i>   ${curr.endTime ? `|  ${curr.endTime} <i>止</i>` : ''}</span></div>
       <p> ${curr.changeInfo}</p>
     </div>`;
 
@@ -453,7 +468,6 @@ class App {
               $('#changeLine_wrap').append(html);
             }
           },
-
         });
       });
     }

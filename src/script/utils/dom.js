@@ -1,6 +1,5 @@
 import { isString, getTime } from './util';
 
-
 export const createBusLineTitleHtml = (data) => {
   const { $ } = layui;
   const wrap = $('#map_result');

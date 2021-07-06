@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="chrome=1" />
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no, width=device-width" />
+    <style type="text/css">
+      body,
+      html {
+        width: 100%;
+        height: 100%;
+        margin: 0px;
+      }
+
+      #container {
+        height: 50%;
+      }
+    </style>
+    <title>公交站点测试</title>
+  </head>
+  <body>
+    <div id="container" tabindex="0"></div>
+    <script src="https://webapi.amap.com/maps?v=1.4.15&key=d0df78bbdb052c857c7051e4354af09f"></script>
+
+    <button id="test">测试-地点查询</button>
+    <script type="text/javascript">
+      var map = new AMap.Map('container', {
+        resizeEnable: true,
+        center: [112.128604, 32.015228],
+        zoom: 11,
+      });
+
+      const polygonArr= [ // 多边形区域内查询
+        [
+          111.87515258789062,
+          31.959153316146658
+        ],
+        [
+          111.80099487304688,
+          32.26274929530214
+        ],
+        [
+          111.99737548828124,
+          32.45531474387748
+        ],
+        [
+          112.3297119140625,
+          32.32427558887655
+        ],
+        [
+          112.510986328125,
+          32.38112122215103
+        ],
+        [
+          112.45742797851561,
+          32.10816944421472
+        ],
+        [
+          112.5,
+          31.863562548378965
+        ],
+        [
+          112.23358154296875,
+          31.89971219631015
+        ],
+        [
+          112.09899902343749,
+          31.785384226419538
+        ],
+        [
+          111.87515258789062,
+          31.959153316146658
+        ]
+      ]
+
+      const len = 3; // 单次测试次数
+      const s = 6; // 每秒大概查询几次
+      const time = (len / s) * 1000;
+      let successNum = 0;
+      let failNum = 0;
+
+
+      const searchData = ['骧龙国际', '国际商都', '名人城市', '十字街', '南湖广场', '人民广场', '襄阳东站', '火车站', '万达广场', '天元四季城']
+      function getOneSearchData() {
+        return searchData[Math.floor(searchData.length * Math.random())];
+      }
+
+      document.querySelector('#test').addEventListener('click', () => {
+        AMap.plugin('AMap.PlaceSearch', () => {
+          const placeSearch = new AMap.PlaceSearch({
+            pageIndex: 1,
+            pageSize: 10,
+            city: '襄阳',
+          });
+
+          let startTime = new Date().getTime();
+
+
+          console.log('开始测试，共需测试', len, '次');
+
+          for (let i = 0; i < len; i += 1) {
+            setTimeout(() => {
+              placeSearch.searchInBounds(getOneSearchData(), polygonArr, (status, result) => {
+                if (status === 'complete') {
+                  successNum++;
+                } else {
+                  failNum++;
+                }
+              });
+            }, Math.random() * time);
+          }
+
+          setTimeout(() => {
+            console.log('测试完成，花费', Math.floor (( new Date().getTime() - startTime)/1000/60 * 100)/100,'min，成功', successNum, '次，失败',failNum, '次');
+          }, time + 1000);
+        });
+      });
+    </script>
+  </body>
+</html>

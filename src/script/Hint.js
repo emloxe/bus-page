@@ -56,7 +56,6 @@ export default class Hint {
         } else {
           const nextDom = activeDom.prev();
           if (nextDom.length > 0) {
-            console.log(nextDom);
             activeDom.removeClass('active');
             nextDom.addClass('active');
           }
